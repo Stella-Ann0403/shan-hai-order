@@ -166,7 +166,7 @@
         <a class="form-btn" 
            href="https://docs.google.com/forms/d/e/1FAIpQLSfwDFSyGtieP8HZXF7sMerwJkikMp8yQ65K7lZXDwFOEWRgBw/viewform"
            target="_blank">
-          ➜ 開啟團購表單
+          ✨ 開啟團購表單
         </a>
       </div>
 
@@ -176,8 +176,9 @@
     </div>
 
     <script>
-      const API_URL = 'https://script.google.com/macros/s/AKfycbw8Yaq_fW6YKtLKt2NAYMfr4GdX3fK7stu40J_Q5OqVjvVHAbRLhL7sFSVN_4WaMEfjYA/exec';
-
+    
+      fetch("你的 Apps Script URL?token=你的token")
+      
       function render(categories) {
         const grid = document.getElementById('grid');
         grid.innerHTML = '';
