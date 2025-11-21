@@ -121,7 +121,7 @@
       .grid {
         display: grid;
         gap: 18px;
-        grid-template-columns: repeat(2, minmax(0, 1fr)); /* 固定 2 欄 */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         margin-top: 26px;
       }
 
@@ -132,7 +132,7 @@
           padding-bottom: 28px;
         }
         .grid {
-          grid-template-columns: 1fr; /* 手機改為單欄 */
+          grid-template-columns: 1fr;
         }
       }
 
@@ -223,27 +223,34 @@
       }
 
       .footer {
-        margin-top: 30px;
+        margin-top: 24px;
         text-align: center;
         font-size: 11px;
         opacity: 0.78;
       }
       .footer span { color: var(--accent); }
 
+      /* ====== 表單區塊：外層可滾動 ====== */
       .form-container {
         width: 100%;
-        max-width: 800px; 
-        margin: 40px auto 20px;
+        max-width: 900px;
+        margin: 32px auto 16px;
+      }
+
+      .form-wrapper {
+        width: 100%;
+        height: 1200px;              /* 表單可視高度 */
+        border-radius: 12px;
+        overflow-y: auto;            /* 這裡出現卷軸 */
+        -webkit-overflow-scrolling: touch;
+        background: rgba(15, 23, 42, 0.85);
       }
 
       #google-form {
-      width: 100%;
-      height: 100%;
-      min-height: 800px;
-      border: none;
+        width: 100%;
+        height: 3000px;              /* 設高一點，避免被截斷 */
+        border: none;
       }
-
-      
     </style>
   </head>
 
@@ -265,28 +272,30 @@
         </div>
       </header>
 
-      <!-- 🔻 這裡改成一個空容器，等等用 JS 塞卡片進來 -->
+      <!-- 統計卡片 -->
       <div class="grid" id="grid"></div>
-      <div>
-        <div class="form-container">
-  <iframe 
-    src="https://docs.google.com/forms/d/e/1FAIpQLSfwDFSyGtieP8HZXF7sMerwJkikMp8yQ65K7lZXDwFOEWRgBw/viewform?embedded=true"
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0"
-    scrolling="no"
-    id="google-form"
-  ></iframe>
-</div>
 
+      <!-- Google 表單可滾動區塊 -->
+      <div class="form-container">
+        <div class="form-wrapper">
+          <iframe 
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfwDFSyGtieP8HZXF7sMerwJkikMp8yQ65K7lZXDwFOEWRgBw/viewform?embedded=true"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            scrolling="no"
+            id="google-form"
+          >載入中…</iframe>
+        </div>
       </div>
-        <div class="footer">
-        <span>山海星光號團購</span> for 2025星趴內部統計使用 · <>
+
+      <div class="footer">
+        <span>山海星光號團購</span> · for 2025星趴內部統計使用
       </div>
     </div>
 
     <script>
-      // 這裡貼剛剛部署好的 Web App URL
+      // TODO：之後你要鎖 API 的話，這裡可以改成 API_URL + "?key=你的key"
       const API_URL = 'https://script.google.com/macros/s/AKfycbw8Yaq_fW6YKtLKt2NAYMfr4GdX3fK7stu40J_Q5OqVjvVHAbRLhL7sFSVN_4WaMEfjYA/exec';
 
       function render(categories) {
@@ -318,7 +327,6 @@
                 ${cat.name}
               </div>
             </div>
-
             <table>
               <thead>
                 <tr>
@@ -350,11 +358,6 @@
             '<p style="text-align:center;opacity:0.8;">無法載入資料，請稍後重試。</p>';
         }
       }
-      window.addEventListener("message", function(e) {
-  if (e.data && e.data.type === "embed-size") {
-    document.getElementById("google-form").style.height = e.data.height + "px";
-  }
-});
 
       loadData();
     </script>
